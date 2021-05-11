@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import {
   ActionFunction,
   Form,
@@ -6,7 +7,6 @@ import {
   MetaFunction,
   redirect,
   usePendingFormSubmit,
-  usePendingLocation,
   useRouteData,
 } from "remix";
 import { json, parseBody, redirectBack } from "remix-utils";
@@ -95,9 +95,8 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
-  const collection = db.collection<Pick<Article, "title" | "content">>(
-    "articles"
-  );
+  const collection =
+    db.collection<Pick<Article, "title" | "content">>("articles");
 
   if (id) {
     await collection.findOneAndReplace(
@@ -125,10 +124,8 @@ export const action: ActionFunction = async ({ request }) => {
 export default function View() {
   const { article } = useRouteData<RouteData>();
   const pendingForm = usePendingFormSubmit();
-  const pendingLocation = usePendingLocation();
+  const location = useLocation();
   const isPending = Boolean(pendingForm);
-
-  // usePrompt("Publishing article.\nAre you sure you want to leave?", isPending);
 
   return (
     <main>
@@ -143,7 +140,7 @@ export default function View() {
           <p>Creating {pendingForm?.data.get("title")}</p>
         ) : null}
 
-        <fieldset disabled={isPending} key={pendingLocation?.key}>
+        <fieldset disabled={isPending} key={location.key}>
           {article?._id ? (
             <input type="hidden" name="id" value={article?._id} />
           ) : null}
