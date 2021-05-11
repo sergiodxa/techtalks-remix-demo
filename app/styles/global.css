@@ -7,10 +7,11 @@ body {
 }
 
 div[role="alert"] {
-  padding: 8px 16px;
+  padding: 4px 16px;
+  border-radius: 8px;
   background-color: #ccc;
   position: fixed;
-  bottom: 16px;
+  top: 16px;
   right: 16px;
-  min-width: 30%;
+  min-width: 20%;
 }
