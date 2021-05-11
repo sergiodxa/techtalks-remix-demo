@@ -8,7 +8,7 @@ export const client = new MongoClient(MONGO_URL)
 
 export async function connect() {
   await client.connect();
-  return client.db("myFirstDatabase");
+  return client.db();
 }
 
 export { ObjectId };
